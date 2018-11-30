@@ -1,0 +1,9 @@
+3dir
+a.out
+dir1
+dir2
+ft_headers.h
+ft_help.c
+main.c
+result.txt
+te
