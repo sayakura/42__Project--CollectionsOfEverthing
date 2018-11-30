@@ -1,1 +1,1 @@
-# All the stuff I done for the 42 main program, the ones that has "(passed)" is the version that I submitted and got graded, everthing else are either incompleted version or just not submitted and get graded yet.
+## All the stuff I done for the 42 main program, the ones that has "-passed" is the version that I submitted and got graded, everthing else are either incompleted version or just not submitted and get graded yet.
