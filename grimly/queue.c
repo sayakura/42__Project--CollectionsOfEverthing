@@ -49,9 +49,3 @@ int		f_queue_dequeue(t_queue *this)
 	}
 	return (INT_MAX);
 }
-/*
-int		f_queue_front(t_queue *this)
-{
-	return (this->listArray[this->head]);	
-}
-*/

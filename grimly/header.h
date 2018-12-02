@@ -23,6 +23,7 @@
 # define bool char
 # define false 0
 # define true 1
+
 typedef enum    e_status
 {
 	ERROR,
@@ -34,7 +35,6 @@ typedef enum    e_is_visit
 	NOT_VISITED,
 	VISITED
 }               t_is_visit;
-
 
 typedef struct s_queue
 {
@@ -50,24 +50,11 @@ typedef struct s_poi
 	int             x;
 	int             y;
 }               t_poi;
-/*
-typedef struct s_path
-{
-	t_poi   		*head;
-	t_poi   		*tail;
-}               t_path;
-*/
-
-typedef struct s_list
-{
-	void            *data;
-	struct s_list   *next;
-}               t_list;
 
 typedef struct s_res
 {
 	t_status    status;
-	char        *map;
+	char        **map;
 }               t_res;
 
 typedef struct  s_info
@@ -86,16 +73,9 @@ typedef struct  s_info
 t_info  g_map_i;
 bool 	**g_visit;
 t_poi 	**g_prev;
-void    ft_putstr_fd(const char *str, int fd);
-void    ft_putchar_fd(char c, int fd);
-int		ft_c_at(char *str, int ch);
-char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
-int		ft_atoi(const char *str);
-char	*ft_strnew(size_t size);
-int		ft_isdigit(char c);
-size_t	ft_strlen(const char *str);
+
+t_status	read_fst_line(int fd);
+char	**read_map(int fd);
+t_res	*parser(int fd);
 void	ft_create_dp(int len, int wd);
-t_list 	*ft_new_node(void *data);
-void	ft_lst_append(t_list **ref, void *data);
-void	ft_putnbr(size_t n);
 #endif

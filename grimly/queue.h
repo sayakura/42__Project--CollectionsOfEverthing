@@ -20,5 +20,4 @@ void	f_queue_enqueue(int	it, t_queue *this);
 int		f_queue_dequeue(t_queue *this);
 int		f_queue_front(t_queue *this);
 
-
 # endif

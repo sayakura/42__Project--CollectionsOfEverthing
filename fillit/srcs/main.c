@@ -23,12 +23,15 @@
 #define COX(num, index, rx)  ((num - (num + index - (num % 5))) - rx)
 #define COY(num, index, ry)  ((((num / 5) + index) %  5) - ry)
 
-static t_list	**save_tetriminos(char *buf)
+static t_poi	*save_tetriminos(char *buf)
 {
 	short 	i;
 	char	index;
+	char	cnt;
+	char	offset[] = {0, 0};
+	t_poi 	*minos;
 
-	t_list	*minos[26];
+	minos = (t_poi *)malloc(sizeof(t_poi) * 26);
 	/*
 	t_list	**minos;
 	t_list 	*temp;
@@ -36,27 +39,41 @@ static t_list	**save_tetriminos(char *buf)
 	minos = malloc(sizeof(t_list **));
 	*minos = temp;*/
 	i = 0;
+	cnt = 0;
 	index = 0;
 	while (buf[i] != '\0')
 	{
 		//.temp = ft_lstnew(NULL, 0);
-		while (buf[i] != '#')
-			i++;
 		/*
 		((t_poi *)(temp->content = malloc(sizeof(t_poi))))->x = COX(i, index, 0);
 		((t_poi *)(temp->content))->y = -COX(i, index, 0);
 		 printf("x: %d  y: %d, i: %d\t", ((t_poi *)(temp->content))->x,  ((t_poi *)(temp->content))->y, i);
 */		while (i % 21 != 20)
 		{
-			while (buf[i] != '#')
+			while (buf[i] == '.' )
 				i++;
-			printf("x:%d y:%d i:%d\n", COX(i, index, 0), -COY(i, index, 0), i);
-			
-			i++;
-			 if (i >= 21)
-				break ;
+			if (buf[i] == '#')
+			{
+				printf("x: %d y: %d i: %d index: %d c: %d rx: %d, ry: %d\n", COX(i, index, offset[0]), -COY(i, index, offset[1]), i, index, i % 21,  offset[0],  offset[1]);
+				i++;
+				cnt++;
+				if (cnt == 1)
+				{
+					offset[0] = COX(i, index, offset[0]);
+					offset[1] = -COY(i, index, offset[1]);
+				}
+			}
+			if (buf[i] == '\n' )
+				i++;
 		}
-		break ;
+		index++;
+		i++;
+		cnt = 0;
+		offset[0] = 0;
+		offset[1] = 0;
+		printf("\n");
+		if (index > 6)
+			break ;
 	}
 	return (minos);
 }

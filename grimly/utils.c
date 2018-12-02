@@ -11,73 +11,112 @@
 /* ************************************************************************** */
 
 #include "header.h"
+#include "libft/libft.h"
 
-void    ft_putchar_fd(char c, int fd)
+t_status	save_syms(char *str)
 {
-	write(fd, &c, 1);
-}
-void    ft_putstr_fd(const char *str, int fd)
-{
-	while (*str)
-		ft_putchar_fd(*str++, fd);
-}
-
-size_t		ft_strlen(const char *str)
-{
-	int		len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
-}
-
-int		ft_c_at(char *str, int ch)
-{
-	char			c;
-	unsigned int	index;
-	size_t			len;
-
-	len = ft_strlen(str);
-	index = 0;
-	c = ch;
-	while (index < len)
-	{
-		if (str[index] == c)
-			return (index);
-		index++;
-	}
-	return (-1);
-}
-
-char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n)
-{
-	size_t		len;
-	size_t		index;
-
-	index = 0;
-	len = ft_strlen(s1);
-	while (index < n && s2[index])
-	{
-		s1[len] = s2[index];
-		len++;
-		index++;
-	}
-	s1[len] = '\0';
-	return (s1);
-}
-
-char	*ft_strnew(size_t size)
-{
-	char			*str;
-	unsigned int	i;
+	int	len;
+	int i;
 
 	i = 0;
-	str = (char *)malloc(sizeof(char) * size + 1);
-	while (i < size + 1)
+	len = ft_strlen(str);
+	g_map_i.dst = str[--len];
+	g_map_i.en = str[--len];
+	g_map_i.pth = str[--len];
+	g_map_i.ety = str[--len];
+	g_map_i.ob = str[--len];
+	g_map_i.len = ft_atoi(str);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (str[i++] != 'x')
+		return (ERROR);
+	g_map_i.wd = ft_atoi(str + i);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (i != len)
+		return (ERROR);
+	return (VALID);
+}
+
+void	ft_create_dp(int len, int wd)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	g_visit = (bool **)malloc(sizeof(bool *) * len);
+	g_prev = (t_poi **)malloc(sizeof(t_poi *) * len);
+	while (i < len)  
 	{
-		str[i] = '\0';
+		g_visit[i] = (bool *)malloc(sizeof(bool) * wd);
+		g_prev[i] = (t_poi *)malloc(sizeof(t_poi) * wd);
+		j = 0;
+		while (j < wd)
+		{
+			g_visit[i][j] = NOT_VISITED;
+			g_prev[i][j].x = -1;
+			g_prev[i][j].y = -1;
+			j++;
+		}
 		i++;
 	}
-	return (str);
+	return ;
+}
+
+t_status	read_fst_line(int fd)
+{
+	char 		buffer[8];
+	char		*str;
+	t_status	status;
+
+	str = ft_strnew(15);
+	if (read(fd, buffer, 8) != 8)
+		return (ERROR);
+	if (ft_char_at(buffer, '\n') != -1 || ft_char_at(buffer, '\0') != -1)
+		return (ERROR);
+	ft_strncat(str, buffer, 8);
+	while (read(fd, buffer, 1) != 0)
+	{
+		if (buffer[0] == '\n')
+			break ;
+		ft_strncat(str, buffer, 1);
+	}
+	status = save_syms(str);
+	free(str);
+	return status;
+}
+
+
+char	**read_map(int fd)
+{
+	int		i;
+	char	**map;
+
+	i = 0;
+	ft_create_dp(g_map_i.len, g_map_i.wd);
+	map = (char **)malloc(sizeof(char *) * g_map_i.len);
+	while (i < g_map_i.len)
+	{
+		map[i] = (char *)malloc(sizeof(char) * g_map_i.wd + 1);
+		read(fd, map[i], g_map_i.wd + 1);
+		i++;      
+	}
+	return (map);
+}
+
+t_res	*parser(int fd)
+{
+	t_res   *res;
+
+	res = (t_res *)malloc(sizeof(t_res));
+	res->status = read_fst_line(fd);
+	if (res->status == ERROR)
+	{
+		close(fd);
+		return (res);
+	}	
+	res->map = read_map(fd);
+	close(fd);
+	return (res);
 }
