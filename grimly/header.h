@@ -85,5 +85,5 @@ void			prompter(int ans);
 void			print_and_free(t_res *res, int ans);
 void			init(void);
 BOOL			is_dupliacte(void);
-void			init_queue(void);
+int				init_queue(void);
 #endif

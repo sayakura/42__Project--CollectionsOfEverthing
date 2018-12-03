@@ -6,7 +6,7 @@
 /*   By: qpeng <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 22:14:17 by qpeng             #+#    #+#             */
-/*   Updated: 2018/10/22 22:14:17 by qpeng            ###   ########.fr       */
+/*   Updated: 2018/12/02 22:02:03 by qpeng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int			map_solve_helper(char **map)
 	g_nodes_here = 1;
 	g_nodes_next = 0;
 	g_cnt = 0;
-	init_queue();
+	if (init_queue() == ERROR)
+		return (-1);
 	while (!g_r.is_empty)
 	{
 		g_x = QUEUE(dequeue)(&g_c);
@@ -149,7 +150,7 @@ int			main(int ac, char **av)
 		(ans = map_solve(res->map)) <= 0)
 		{
 			i++;
-			ft_putstr_fd("MAP ERROR\n", 1);
+			ft_putstr_fd("MAP ERROR\n", 2);
 			close(fd);
 			continue ;
 		}

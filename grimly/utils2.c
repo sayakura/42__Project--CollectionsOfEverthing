@@ -65,11 +65,14 @@ void	init(void)
 	g_map_i.ext.y = -1;
 }
 
-void	init_queue(void)
+int		init_queue(void)
 {
+	if (g_map_i.enp.x == -1 || g_map_i.enp.y == -1)
+		return (ERROR);
 	QUEUE(init)(g_map_i.len * g_map_i.wd + g_map_i.len, &g_r);
 	QUEUE(init)(g_map_i.len * g_map_i.wd + g_map_i.len, &g_c);
 	QUEUE(enqueue)(g_map_i.enp.y, &g_r);
 	QUEUE(enqueue)(g_map_i.enp.x, &g_c);
 	g_visit[g_map_i.enp.y][g_map_i.enp.x] = VISITED;
+	return (VALID);
 }
