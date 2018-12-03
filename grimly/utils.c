@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "header.h"
-#include "libft/libft.h"
 
 t_status	save_syms(char *str)
 {
@@ -38,18 +37,18 @@ t_status	save_syms(char *str)
 	return (VALID);
 }
 
-void	ft_create_dp(int len, int wd)
+void		ft_create_dp(int len, int wd)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	g_visit = (bool **)malloc(sizeof(bool *) * len);
+	g_visit = (BOOL **)malloc(sizeof(BOOL *) * len);
 	g_prev = (t_poi **)malloc(sizeof(t_poi *) * len);
-	while (i < len)  
+	while (i < len)
 	{
-		g_visit[i] = (bool *)malloc(sizeof(bool) * wd);
+		g_visit[i] = (BOOL *)malloc(sizeof(BOOL) * wd);
 		g_prev[i] = (t_poi *)malloc(sizeof(t_poi) * wd);
 		j = 0;
 		while (j < wd)
@@ -66,7 +65,7 @@ void	ft_create_dp(int len, int wd)
 
 t_status	read_fst_line(int fd)
 {
-	char 		buffer[8];
+	char		buffer[8];
 	char		*str;
 	t_status	status;
 
@@ -84,11 +83,10 @@ t_status	read_fst_line(int fd)
 	}
 	status = save_syms(str);
 	free(str);
-	return status;
+	return (status);
 }
 
-
-char	**read_map(int fd)
+char		**read_map(int fd)
 {
 	int		i;
 	char	**map;
@@ -100,22 +98,24 @@ char	**read_map(int fd)
 	{
 		map[i] = (char *)malloc(sizeof(char) * g_map_i.wd + 1);
 		read(fd, map[i], g_map_i.wd + 1);
-		i++;      
+		i++;
 	}
 	return (map);
 }
 
-t_res	*parser(int fd)
+t_res		*parser(int fd)
 {
-	t_res   *res;
+	t_res	*res;
 
 	res = (t_res *)malloc(sizeof(t_res));
 	res->status = read_fst_line(fd);
+	if (is_dupliacte())
+		res->status = ERROR;
 	if (res->status == ERROR)
 	{
 		close(fd);
 		return (res);
-	}	
+	}
 	res->map = read_map(fd);
 	close(fd);
 	return (res);

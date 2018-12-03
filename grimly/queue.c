@@ -14,20 +14,20 @@
 
 void	f_queue_init(size_t size, t_queue *this)
 {
-	this->maxSize = size + 1;
+	this->max_size = size + 1;
 	this->tail = 0;
 	this->head = 1;
-	this->listArray = (int *)malloc(sizeof(int) * this->maxSize);
-	this->isEmpty = true;
+	this->list_array = (int *)malloc(sizeof(int) * this->max_size);
+	this->is_empty = TRUE;
 }
 
 void	f_queue_enqueue(int it, t_queue *this)
 {
-	if (((this->tail + 2) % this->maxSize) != this->head)
+	if (((this->tail + 2) % this->max_size) != this->head)
 	{
-		this->tail = (this->tail + 1) % this->maxSize;
-		this->listArray[this->tail] = it;
-		this->isEmpty = false;
+		this->tail = (this->tail + 1) % this->max_size;
+		this->list_array[this->tail] = it;
+		this->is_empty = FALSE;
 	}
 }
 
@@ -36,16 +36,16 @@ int		f_queue_dequeue(t_queue *this)
 	int		length;
 	int		it;
 
-	length = ((this->tail + this->maxSize) -\
-		this->head + 1) % this->maxSize;
-	if(length != 0)
+	length = ((this->tail + this->max_size) -\
+	this->head + 1) % this->max_size;
+	if (length != 0)
 	{
-		it = this->listArray[this->head];
-		this->head = (this->head + 1) % this->maxSize;
-		length = ((this->tail + this->maxSize) -\
-			this->head + 1) % this->maxSize;
-		this->isEmpty = (length == 0) ? true : false;
-		return it;
+		it = this->list_array[this->head];
+		this->head = (this->head + 1) % this->max_size;
+		length = ((this->tail + this->max_size) -\
+			this->head + 1) % this->max_size;
+		this->is_empty = (length == 0) ? TRUE : FALSE;
+		return (it);
 	}
 	return (INT_MAX);
 }

@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef QUEUE_H
+#ifndef QUEUE_H
 # define QUEUE_H
 
-# define queue(funct) f_queue_##funct
+# define QUEUE(funct) f_queue_##funct
 
 void	f_queue_init(size_t size, t_queue *this);
 void	f_queue_enqueue(int	it, t_queue *this);
 int		f_queue_dequeue(t_queue *this);
 int		f_queue_front(t_queue *this);
 
-# endif
+#endif

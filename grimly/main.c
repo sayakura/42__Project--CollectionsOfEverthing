@@ -12,27 +12,16 @@
 
 #include "header.h"
 #include "queue.h"
-#include <stdio.h>
-#include "libft/libft.h"
-
-#define __PROMPT__(ans) 	ft_putstr_fd("RESULT IN ", 1); \
-							ft_putnbr(--ans);\
-							ft_putstr_fd(" STEPS!\n", 1);
-
-#define __PRINTHEADER__()	ft_putnbr(g_map_i.len);\
-							ft_putchar('x');\
-							ft_putnbr(g_map_i.wd);\
-							ft_putchar(g_map_i.ob);\
-							ft_putchar(g_map_i.ety);\
-							ft_putchar(g_map_i.pth);\
-							ft_putchar(g_map_i.en);\
-							ft_putchar(g_map_i.dst);\
-							ft_putchar('\n');
 
 const int	g_dy[4] = {-1, 0, 0, 1};
 const int	g_dx[4] = {0, -1, 1, 0};
+int			g_x;
+int			g_y;
+int			g_nodes_here;
+int			g_nodes_next;
+int			g_cnt;
 
-void	explore_cells(int y, int x, t_queue	*r, t_queue	*c, int *node_next, char **map)
+void		explore_cells(int y, int x, int *node_next, char **map)
 {
 	int i;
 	int xx;
@@ -44,7 +33,6 @@ void	explore_cells(int y, int x, t_queue	*r, t_queue	*c, int *node_next, char **
 		xx = x + g_dx[i];
 		yy = y + g_dy[i];
 		i++;
-		
 		if (xx < 0 || yy < 0)
 			continue ;
 		if (xx >= g_map_i.wd || yy >= g_map_i.len)
@@ -57,65 +45,45 @@ void	explore_cells(int y, int x, t_queue	*r, t_queue	*c, int *node_next, char **
 		g_visit[yy][xx] = VISITED;
 		g_prev[yy][xx].x = x;
 		g_prev[yy][xx].y = y;
-		queue(enqueue)(yy, r);
-		queue(enqueue)(xx, c);
+		QUEUE(enqueue)(yy, &g_r);
+		QUEUE(enqueue)(xx, &g_c);
 	}
 }
 
-int		map_solve_helper(t_poi en, char **map)
+int			map_solve_helper(char **map)
 {
-	t_queue	r;
-	t_queue	c;
-	bool reached_end;
-	int x;
-	int y;
-	int nodes_here;
-	int nodes_next;
-	int cnt;
-	
-	nodes_here = 1;
-	nodes_next = 0;
-	reached_end = false;
-	cnt = 0;
-	queue(init)(g_map_i.len * g_map_i.wd + g_map_i.len,  &r);
-	queue(init)(g_map_i.len * g_map_i.wd + g_map_i.len,  &c);
-	queue(enqueue)(en.y, &r);
-	queue(enqueue)(en.x, &c);
-	g_visit[en.y][en.x] = VISITED;
-	while (!r.isEmpty)
+	g_nodes_here = 1;
+	g_nodes_next = 0;
+	g_cnt = 0;
+	init_queue();
+	while (!g_r.is_empty)
 	{
-		x = queue(dequeue)(&c);
-		y = queue(dequeue)(&r);
-		if (map[y][x] == g_map_i.dst)
+		g_x = QUEUE(dequeue)(&g_c);
+		g_y = QUEUE(dequeue)(&g_r);
+		if (map[g_y][g_x] == g_map_i.dst)
 		{
-			g_map_i.ext.y = y;
-			g_map_i.ext.x = x;
-			reached_end = true;
-			break ;
+			g_map_i.ext.y = g_y;
+			g_map_i.ext.x = g_x;
+			return (g_cnt);
 		}
-		explore_cells(y, x, &r, &c, &nodes_next, map);
-		nodes_here--;
-		if (nodes_here == 0)
+		explore_cells(g_y, g_x, &g_nodes_next, map);
+		g_nodes_here--;
+		if (g_nodes_here == 0)
 		{
-			nodes_here = nodes_next;
-			nodes_next = 0;
-			cnt++;
+			g_nodes_here = g_nodes_next;
+			g_nodes_next = 0;
+			g_cnt++;
 		}
 	}
-	if (reached_end)
-		return (cnt);
-	else
-		return (-1);
+	return (-1);
 }
 
 t_status	map_solve(char **map)
 {
-	int 	r;
-	int 	c;
-	t_poi	en;
+	int		r;
+	int		c;
 	t_poi	*ext;
 
-	en.x = -1;
 	r = 0;
 	while (r < g_map_i.len)
 	{
@@ -124,29 +92,27 @@ t_status	map_solve(char **map)
 		{
 			if (map[r][c] == g_map_i.en)
 			{
-				if (en.x != -1)
+				if (g_map_i.enp.x != -1)
 					return (ERROR);
-				en.x = c;
-				en.y = r;
 				g_map_i.enp.x = c;
 				g_map_i.enp.y = r;
 			}
-			if (map[r][c] != g_map_i.ety && map[r][c]  != g_map_i.ob\
-				&& map[r][c] != g_map_i.dst &&map[r][c]  != g_map_i.en)
+			if (map[r][c] != g_map_i.ety && map[r][c] != g_map_i.ob\
+				&& map[r][c] != g_map_i.dst && map[r][c] != g_map_i.en)
 				return (ERROR);
 			c++;
 		}
 		r++;
 	}
-	return (map_solve_helper(en, map));
+	return (map_solve_helper(map));
 }
 
-void	print_map(char **map)
+void		print_map(char **map)
 {
-	int	i;
-	int j;
-	t_poi curr;
-	 
+	int		i;
+	int		j;
+	t_poi	curr;
+
 	i = 0;
 	curr.x = g_map_i.ext.x;
 	curr.y = g_map_i.ext.y;
@@ -165,31 +131,29 @@ void	print_map(char **map)
 	}
 }
 
-
-
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
-	int     fd;
-	t_res   *res;
+	int		fd;
+	t_res	*res;
 	int		ans;
-	int i;
+	int		i;
 
 	i = 1;
 	ans = 0;
 	while (i < ac || (i == ac && ac == 1))
 	{
+		init();
 		fd = (ac == 1) ? 0 : open(av[i], O_RDONLY);
 		res = (fd == -1) ? NULL : parser(fd);
-		if (res == NULL || res->status == ERROR || (ans = map_solve(res->map)) <= 0)
+		if (res == NULL || res->status == ERROR ||\
+		(ans = map_solve(res->map)) <= 0)
 		{
 			i++;
-			ft_putstr_fd("MAP ERROR\n", 2);
+			ft_putstr_fd("MAP ERROR\n", 1);
 			close(fd);
 			continue ;
 		}
-		__PRINTHEADER__();
-		print_map(res->map);
-		__PROMPT__(ans);
+		print_and_free(res, ans);
 		close(fd);
 		i++;
 	}
