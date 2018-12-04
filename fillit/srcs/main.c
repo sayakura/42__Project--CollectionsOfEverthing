@@ -57,9 +57,7 @@ static t_poi	*save_tetriminos(char *buf)
 				printf("x: %d y: %d i: %d index: %d c: %d rx: %d, ry: %d\n", COX(i, index, offset[0]), -COY(i, index, offset[1]), i, index, i % 21,  offset[0],  offset[1]);
 				i++;
 				cnt++;
-				if (cnt == 1)
-				{
-					offset[0] = COX(i, index, offset[0]);
+				if (cnt == 1) 
 					offset[1] = -COY(i, index, offset[1]);
 				}
 			}

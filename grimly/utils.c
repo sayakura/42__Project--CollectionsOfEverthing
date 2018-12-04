@@ -6,7 +6,7 @@
 /*   By: qpeng <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 22:22:26 by qpeng             #+#    #+#             */
-/*   Updated: 2018/10/22 22:22:26 by qpeng            ###   ########.fr       */
+/*   Updated: 2018/12/03 19:14:18 by qpeng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_status	save_syms(char *str)
 	g_map_i.pth = str[--len];
 	g_map_i.ety = str[--len];
 	g_map_i.ob = str[--len];
+	if (ft_isdigit(g_map_i.ob))
+		return (ERROR);
 	g_map_i.len = ft_atoi(str);
 	while (ft_isdigit(str[i]))
 		i++;
