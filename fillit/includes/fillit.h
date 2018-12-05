@@ -27,10 +27,15 @@ typedef enum	status
 
 typedef struct	s_poi
 {
-	char	x: 3;
-	char	y: 3;
+	short		x;
+	short		y;
 }				t_poi;
 
+typedef struct	s_mino{
+	t_poi			***minos;
+	unsigned char	length;
+	unsigned short	width;
+}				t_mino;
 /*
 typedef struct	s_list
 {
