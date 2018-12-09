@@ -18,6 +18,8 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
+# include <stdint.h>
+
 
 typedef enum	status
 {
@@ -33,8 +35,10 @@ typedef struct	s_poi
 
 typedef struct	s_mino{
 	t_poi			***minos;
-	unsigned char	length;
+	char			**map;
+	unsigned short	length;
 	unsigned short	width;
+	uint32_t		filled;
 }				t_mino;
 /*
 typedef struct	s_list
@@ -44,4 +48,6 @@ typedef struct	s_list
 }				t_list;*/
 //void	solve(char **shapes, int c);
 
+short       next_block(uint32_t bits, int length);
+uint32_t    fill_bit(int length);
 #endif

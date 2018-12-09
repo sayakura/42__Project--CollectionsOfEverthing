@@ -6,7 +6,7 @@
 #    By: qpeng <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/25 05:15:27 by qpeng             #+#    #+#              #
-#    Updated: 2018/11/25 05:16:00 by qpeng            ###   ########.fr        #
+#    Updated: 2018/12/06 04:58:48 by qpeng            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ BLUE		=	\033[0;34m
 RED			=	\033[0;31m
 
 CC			=	gcc
-CC_FLAGS	=	-Wall -Werror -Wextra
+CC_FLAGS	=	-Wall -Wextra -Werror -g
 
 SRC_PATH	=	./srcs/
 INC_PATH	=	./includes/

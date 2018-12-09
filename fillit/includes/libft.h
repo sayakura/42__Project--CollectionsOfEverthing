@@ -6,7 +6,7 @@
 /*   By: qpeng <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 16:39:38 by qpeng             #+#    #+#             */
-/*   Updated: 2018/11/16 10:53:34 by qpeng            ###   ########.fr       */
+/*   Updated: 2018/12/06 07:32:57 by qpeng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,7 @@ char			*ft_strncat(char *s1, const char *s2, size_t n);
 char			*ft_strcat(char *restrict s1, const char *restrict s2);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
+void			ft_errorexit(char *messege);
+void			ft_swap(int *a, int *b);
+int				factorial(int num);
 #endif

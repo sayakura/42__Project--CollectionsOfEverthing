@@ -6,7 +6,7 @@
 #    By: qpeng <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/12 01:46:46 by qpeng             #+#    #+#              #
-#    Updated: 2018/11/25 05:40:58 by qpeng            ###   ########.fr        #
+#    Updated: 2018/12/06 07:26:07 by qpeng            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,9 @@ SRCS = ft_strrchr.c\
 		ft_strcat.c\
 		ft_strncat.c\
 		ft_strnlen.c\
-		ft_errorexit.c
+		ft_errorexit.c\
+		ft_swap.c\
+		ft_factorial.c\
 
 OBJS = $(SRCS:.c=.o)
 
