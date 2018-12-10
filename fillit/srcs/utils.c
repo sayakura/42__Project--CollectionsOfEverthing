@@ -114,7 +114,7 @@ static t_status	map_validator(char *buf)
 		if (i % 21 == 20 && i++)
 			blkcnt = 0;
 	}
-	return (Valid);
+	return (Valid && (i % 21 == 0));
 }
 
 char			*reader(int fd)
