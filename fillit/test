@@ -3,7 +3,7 @@ import os
 
 samples = "./samples"
 sample_arr = []
-execute = "./a.out"
+execute = "./fillit"
 for filename in os.listdir(samples):
 	sample_arr.append(filename)
 sample_arr.sort()

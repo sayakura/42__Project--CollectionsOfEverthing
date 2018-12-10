@@ -6,7 +6,7 @@
 #    By: qpeng <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/12 01:46:46 by qpeng             #+#    #+#              #
-#    Updated: 2018/12/09 21:52:21 by qpeng            ###   ########.fr        #
+#    Updated: 2018/12/09 22:58:46 by qpeng            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,13 +93,13 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)LIBFT ✓ Created libft.a"
 
 $(OBJS): $(SRCS)
-	gcc $(CFLAGS) -I=$(HEADER) $(SRCS)
+	@gcc $(CFLAGS) -I=$(HEADER) $(SRCS)
 
 clean:
-	/bin/rm -f $(OBJS)
+	@/bin/rm -f $(OBJS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 

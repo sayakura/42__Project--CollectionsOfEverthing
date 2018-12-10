@@ -15,7 +15,7 @@
 
 static t_poi	**save_this_block(char **map)
 {
-	int 	i;
+	int		i;
 	int		b_i;
 	t_poi	*poi;
 	t_poi	**block;
@@ -42,16 +42,15 @@ static t_poi	**save_this_block(char **map)
 	return (block);
 }
 
-t_poi	        ***save_tetriminos(char *buf, short blocks)
+t_poi			***save_tetriminos(char *buf, short blocks)
 {
-	short 	i;
-	t_poi 	***minos;
+	short	i;
+	t_poi	***minos;
 
 	i = 0;
 	minos = (t_poi ***)malloc(sizeof(t_poi**) * blocks);
 	while (i < blocks)
 		minos[i++] = save_this_block(&buf);
-
 	i = 0;
 	while (i < blocks)
 	{
@@ -62,7 +61,7 @@ t_poi	        ***save_tetriminos(char *buf, short blocks)
 	return (minos);
 }
 
-int		        validate_tetriminos(t_mino *mino)
+int				validate_tetriminos(t_mino *mino)
 {
 	int	i;
 	int	j;
@@ -91,7 +90,6 @@ int		        validate_tetriminos(t_mino *mino)
 	return (Valid);
 }
 
-
 static t_status	map_validator(char *buf)
 {
 	int		i;
@@ -119,16 +117,16 @@ static t_status	map_validator(char *buf)
 	return (Valid);
 }
 
-char		    *reader(int fd)
+char			*reader(int fd)
 {
-	char 	*buf;
+	char	*buf;
 	short	b_read;
 
 	buf = ft_strnew(666);
-	if ((b_read = read(fd, buf, 666)) < 0)
+	if (fd < 0 || (b_read = read(fd, buf, 666)) <= 0)
 		return (NULL);
 	if (map_validator(buf) == Invalid)
-	{	
+	{
 		free(buf);
 		return (NULL);
 	}

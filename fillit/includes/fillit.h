@@ -20,7 +20,7 @@
 # include "../libft/libft.h"
 # include <stdint.h>
 
-typedef enum	status
+typedef enum	e_status
 {
 	Invalid,
 	Valid
@@ -37,11 +37,11 @@ typedef struct	s_mino{
 	char			**map;
 	unsigned short	length;
 	unsigned short	width;
-	uint32_t		filled;
+	short			mode;
 }				t_mino;
 
-#define ABS(a) (a < 0 ? -a : a)
-#define CHECKNL(c) (c == '\0' || c == '\n')
+# define ABS(a) (a < 0 ? -a : a)
+# define CHECKNL(c) (c == '\0' || c == '\n')
 
 t_poi			***save_tetriminos(char *buf, short blocks);
 int				validate_tetriminos(t_mino *mino);

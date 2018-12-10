@@ -6,7 +6,7 @@
 #    By: qpeng <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/25 05:15:27 by qpeng             #+#    #+#              #
-#    Updated: 2018/12/06 04:58:48 by qpeng            ###   ########.fr        #
+#    Updated: 2018/12/09 22:57:27 by qpeng            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ BLUE		=	\033[0;34m
 RED			=	\033[0;31m
 
 CC			=	gcc
-CC_FLAGS	=	-Wall -Wextra -Werror -g
+CC_FLAGS	=	-Wall -Wextra -Werror
 
 SRC_PATH	=	./srcs/
 INC_PATH	=	./includes/
@@ -33,7 +33,7 @@ OBJ_NAME	=	$(SRC_NAME:.c=.o)
 
 INC_NAME	=	fillit.h
 
-SRC_NAME	=	*.c
+SRC_NAME	=	main.c utils.c
 
 all: $(NAME)
 

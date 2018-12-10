@@ -41,20 +41,20 @@ static char		**map_op(char **map, char width, const char *token)
 	return (NULL);
 }
 
-static int		fill(t_mino *m, int y, int x, int mi, int clean)
+static int		fill(t_mino *m, int y, int x, int mi)
 {
 	char	c;
 	short	i;
 
 	i = 0;
-	c = (clean) ? '.' : 'A' + mi;
+	c = (m->mode == 1) ? '.' : 'A' + mi;
 	while (i < 4)
 	{
 		if (!((y + m->minos[mi][i]->y) < m->width) ||\
 			!((x + m->minos[mi][i]->x) < m->width) ||\
 			!(x + m->minos[mi][i]->x >= 0) || \
 			!((m->map)[y + m->minos[mi][i]->y][x + m->minos[mi][i]->x]\
-			== ((clean) ? 'A' + mi : '.')))
+			== ((m->mode == 1) ? 'A' + mi : '.')))
 			break ;
 		i++;
 	}
@@ -78,13 +78,19 @@ static int		solve(t_mino *mino, int mino_i, int width)
 	{
 		x = -1;
 		while (++x < width)
-			if (mino->map[y][x] == '.' && fill(mino, y, x, mino_i, 0))
+		{
+			mino->mode = 0;
+			if (mino->map[y][x] == '.' && fill(mino, y, x, mino_i))
 			{
 				if (solve(mino, mino_i + 1, width))
 					return (Valid);
-				else 
-					fill(mino, y, x, mino_i, 1);
+				else
+				{
+					mino->mode = 1;
+					fill(mino, y, x, mino_i);
+				}
 			}
+		}
 	}
 	return (Invalid);
 }
@@ -112,7 +118,7 @@ static void		free_the_world(t_mino **mino, int map_only)
 	free((*mino));
 }
 
-int			main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	t_mino	*mino;
 	char	*buf;
@@ -127,17 +133,16 @@ int			main(int ac, char **av)
 	mino->width = ft_sqrt((mino->length) * 4);
 	mino->map = map_op(NULL, mino->width, "create");
 	if (validate_tetriminos(mino))
+	{
 		while (!solve(mino, 0, mino->width))
 		{
-				free_the_world(&mino, 1);
-				mino->map = map_op(NULL, ++mino->width, "create");
+			free_the_world(&mino, 1);
+			mino->map = map_op(NULL, ++mino->width, "create");
 		}
-	else 
-	{
-		free_the_world(&mino, 0);
-		ft_errorexit("error");
+		map_op(mino->map, mino->width, "print");
 	}
-	map_op(mino->map, mino->width, "print");
+	else
+		write(1, "error\n", 6);
 	free_the_world(&mino, 0);
 	return (0);
 }
