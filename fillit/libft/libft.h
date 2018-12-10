@@ -6,7 +6,7 @@
 /*   By: qpeng <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/10 16:39:38 by qpeng             #+#    #+#             */
-/*   Updated: 2018/12/06 07:32:57 by qpeng            ###   ########.fr       */
+/*   Updated: 2018/12/09 21:51:50 by qpeng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,5 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			ft_errorexit(char *messege);
 void			ft_swap(int *a, int *b);
 int				factorial(int num);
+int				ft_sqrt(int n);
 #endif

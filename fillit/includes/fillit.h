@@ -20,7 +20,6 @@
 # include "../libft/libft.h"
 # include <stdint.h>
 
-
 typedef enum	status
 {
 	Invalid,
@@ -40,14 +39,12 @@ typedef struct	s_mino{
 	unsigned short	width;
 	uint32_t		filled;
 }				t_mino;
-/*
-typedef struct	s_list
-{
-	t_poi			data;
-	struct s_list	next;
-}				t_list;*/
-//void	solve(char **shapes, int c);
 
-short       next_block(uint32_t bits, int length);
-uint32_t    fill_bit(int length);
+#define ABS(a) (a < 0 ? -a : a)
+#define CHECKNL(c) (c == '\0' || c == '\n')
+
+t_poi			***save_tetriminos(char *buf, short blocks);
+int				validate_tetriminos(t_mino *mino);
+char			*reader(int fd);
+
 #endif
