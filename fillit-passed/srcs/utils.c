@@ -125,6 +125,8 @@ char			*reader(int fd)
 	buf = ft_strnew(666);
 	if (fd < 0 || (b_read = read(fd, buf, 666)) <= 0)
 		return (NULL);
+	if (b_read > 547)
+		return (NULL);
 	if (map_validator(buf) == Invalid)
 	{
 		free(buf);
